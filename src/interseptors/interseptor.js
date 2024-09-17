@@ -20,8 +20,8 @@ export const AxiosInterseptor = () => {
       return response;
     },
     (error) => {
-      console.log("error interseptor", error.response.data);
-      //return Promise.reject(error);
+      //console.log("error interseptor", error.response.data);
+      return Promise.reject(error);
     },
   );
 };

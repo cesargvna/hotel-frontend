@@ -1,71 +1,60 @@
 import { useState } from "react";
 import { login } from "../services/api.service.js";
 import { saveInLocalStorage } from "../utilities/local-storage-manager.js";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
 import "./login.css";
-
 const Login = () => {
-  const navigate = useNavigate();
-
-  const [errorAcount, setErrorAcount] = useState("");
-  const validationSchema = Yup.object({
-    email: Yup.string().email("Invalid email address").required("*Required"),
-    password: Yup.string().required("*Required"),
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
   });
-  const handleSubmit = async (values, { setSubmitting }) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const userLogged = await login(values.email, values.password);
+      const userLogged = await login(formData.username, formData.password);
+      console.log(userLogged.data);
       saveInLocalStorage("user", userLogged.data);
-      navigate("/protected", { replace: true });
-      values.email = "";
-      values.password = "";
     } catch (error) {
-      setErrorAcount(error.response.data.error);
-      values.email = "";
-      values.password = "";
-      setTimeout(() => {
-        setErrorAcount("");
-      }, 3000);
+      console.log(error.response.data);
     }
-    setSubmitting(false);
   };
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
   return (
-    <Formik
-      initialValues={{ email: "", password: "" }}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      <div className="login-container">
-        <div className="login-left"></div>
-        <div className="login-right">
-          <div className="login-right-content">
-            <Form>
-              <h3>Hotel California</h3>
-              {errorAcount && <div className="error-acount">{errorAcount}</div>}
-              <div className="login-form">
-                <label htmlFor="email">Email</label>
-                <Field name="email" type="text" />
-                <div className="error-form">
-                  <ErrorMessage name="email" />
-                </div>
-              </div>
-
-              <div className="login-form">
-                <label htmlFor="password">password</label>
-                <Field className="login-form" name="password" type="password" />
-                <div className="error-form">
-                  <ErrorMessage name="password" />
-                </div>
-              </div>
-
-              <button className="btn-login" type="submit">
-                Submit
-              </button>
-            </Form>
-          </div>
+    <div className="login-container">
+      <div className="login-left"></div>
+      <div className="login-right">
+        <div className="login-right-content">
+          <h1>Welcome to Hotel</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="login-form">
+              <label>Username</label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                placeholder="Username"
+              />
+            </div>
+            <div className="login-form">
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Password"
+              />
+            </div>
+            <button className="btn-login" type="submit">
+              Login
+            </button>
+          </form>
           <div className="container-line">
             <div className="line"></div>
             <div className="text">or continue with</div>
@@ -116,7 +105,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </Formik>
+    </div>
   );
 };
 

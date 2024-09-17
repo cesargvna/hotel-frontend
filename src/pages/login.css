@@ -3,6 +3,10 @@
 :before {
   box-sizing: border-box;
 }
+:root {
+  --error-text-color: rgb(151, 6, 6);
+  --error-bg-color: rgb(255, 234, 229);
+}
 .login-container {
   display: flex;
 }
@@ -32,7 +36,7 @@
 .login-form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  padding-bottom: 10px;
 }
 .login-form label {
   font-size: 16px;
@@ -101,6 +105,22 @@
 
 .login-account a:hover {
   background-color: #6c707a;
+}
+
+.error-acount {
+  background-color: var(--error-bg-color);
+  color: var(--error-text-color);
+  font-size: 14px;
+  border: 1px solid rgb(255, 205, 199);
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+.error-form {
+  color: var(--error-text-color);
+  font-size: 14px;
+  margin: 0;
+  padding: 5px;
 }
 
 @media (max-width: 768px) {
