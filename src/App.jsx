@@ -4,6 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import ProtectedPage from "./pages/protected/ProtectedPage.jsx";
 import RequireAuth from "./guard/RequireAuth.jsx";
+import Sidebar from "./components/sidebar/Sidebar.jsx";
+import Hotel from "./components/hotels/Hotel.jsx";
 
 function App() {
   return (
@@ -13,13 +15,18 @@ function App() {
         <Route path="/" element={<LandingPage />} />
 
         <Route
-          path="/protected"
+          path="/protected/*"
           element={
             <RequireAuth>
-              <ProtectedPage />
+              <Sidebar >
+                <Routes >
+                  <Route path='hotels' element={<Hotel />} />
+                </Routes>
+              </Sidebar>
             </RequireAuth>
           }
         />
+
       </Route>
     </Routes>
   );

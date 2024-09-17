@@ -1,10 +1,11 @@
+import Sidebar from "../../components/sidebar/Sidebar";
+import { Hotel } from "@mui/icons-material";
+
 export default function ProtectedPage() {
   return (
-    <div className="container-protected">
-      <div className="content">
-        <h1>Protected Page</h1>
-        <p>This is a protected page.</p>
-      </div>
-    </div>
+    <Sidebar>
+
+      <Hotel />
+    </Sidebar>
   );
 }
