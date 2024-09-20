@@ -13,7 +13,6 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route element={<Header />}>
         <Route path="/" element={<LandingPage />} />
-
         <Route
           path="/protected/*"
           element={
@@ -26,7 +25,6 @@ function App() {
             </RequireAuth>
           }
         />
-
       </Route>
     </Routes>
   );
