@@ -9,10 +9,22 @@ import styled from "styled-components";
 const MainContainer = styled.div`
   display: flex;
 `;
+const SidebarContent = styled.div`
+  width: ${(props) => (props.isOpen ? "250px" : "80px")};
+  height: 92vh;
+  background-color: #1868b8;
+  padding: 10px;
+`;
 
-const SidebarContainer = styled.div`
-  width: ${({ isOpen }) => (isOpen ? "260px" : "40px")};
-  background-color: blue;
+const SidebarItem = styled(NavLink)`
+  display: flex;
+  gap: 10px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #fff;
+`;
+const ItemName = styled.div`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
 `;
 
 const Sidebar = ({ children }) => {
@@ -38,34 +50,18 @@ const Sidebar = ({ children }) => {
 
   return (
     <MainContainer>
-      <SidebarContainer>
+      <SidebarContent isOpen={isOpen}>
         <div className="top_section">
-          <div className="container-bars">
-            <div>
-              <HorizontalSplitIcon
-                style={{ color: "#000000" }}
-                onClick={toggle}
-              />
-            </div>
-          </div>
+          <HorizontalSplitIcon style={{ color: "#000000" }} onClick={toggle} />
         </div>
         {menuItem.map((item, index) => (
-          <NavLink
-            to={`/protected${item.path}`}
-            key={index}
-            className="link"
-            activeclassname="active"
-          >
-            <div className="icon">{item.icon}</div>
-            <div
-              style={{ display: isOpen ? "block" : "none" }}
-              className="link_text"
-            >
-              {item.name}
-            </div>
-          </NavLink>
+          <SidebarItem to={`/protected${item.path}`}>
+            <div>{item.icon}</div>
+            <ItemName isOpen={isOpen}>{item.name}</ItemName>
+          </SidebarItem>
         ))}
-      </SidebarContainer>
+      </SidebarContent>
+
       <main>{children}</main>
     </MainContainer>
   );
