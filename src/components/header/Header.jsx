@@ -64,7 +64,7 @@ export default function Header() {
                   handleclick={handleOpen}
                   name={user.name}
                   imageUrl={user.avatar}
-                  size={30}
+                  size={40}
                 />
                 <DropdownMenu open={open}>
                   <MenuItem>
