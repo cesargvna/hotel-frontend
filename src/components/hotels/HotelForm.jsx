@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -76,14 +77,14 @@ const ButtonContent = styled.div`
 const SubmitButton = styled.button`
   width: 40%;
   padding: 0.75rem;
-  background-color: #007bff;
+  background-color: #00c4cc;
   color: white;
   font-size: 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   &:hover {
-    background-color: #0056b3;
+    background-color: #009fa8;
   }
 `;
 
@@ -106,12 +107,18 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   address: Yup.string().required("Address is required"),
   classification: Yup.string().required("Classification is required"),
-  image: Yup.mixed().required("Image is required"),
-  checkIn: Yup.string().required("Check-in time is required"),
-  checkOut: Yup.string().required("Check-out time is required"),
+  price: Yup.number().required("Price is required"),
+  //checkIn: Yup.string().required("Check-in time is required"),
+  // checkOut: Yup.string().required("Check-out time is required"),
 });
-
 const HotelForm = () => {
+  const [fileName, setFileName] = useState("");
+  const [src, setSrc] = useState("");
+
+  const handleSubmit = (values) => {
+    console.log("Formulario enviado con los valores:", values);
+  };
+
   return (
     <Container>
       <FormContainer>
@@ -121,33 +128,13 @@ const HotelForm = () => {
             name: "",
             address: "",
             classification: "",
-            image: null,
             price: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={(values) => handleSubmit(values)} // Cambié "lol" por una función que maneja el envío
         >
           {({ setFieldValue }) => (
             <Form>
-              <div>
-                <Label htmlFor="name">Name</Label>
-                <Input type="text" name="name" />
-                <ErrorMessage name="name" component={ErrorText} />
-              </div>
-
-              <div>
-                <Label htmlFor="address">Address</Label>
-                <Input type="text" name="address" />
-                <ErrorMessage name="address" component={ErrorText} />
-              </div>
-
-              <div>
-                <Label htmlFor="classification">Classification</Label>
-                <Input type="text" name="classification" />
-                <ErrorMessage name="classification" component={ErrorText} />
-              </div>
               <div>
                 <Label htmlFor="name">Name</Label>
                 <Input type="text" name="name" />
@@ -171,21 +158,30 @@ const HotelForm = () => {
                 <Input
                   type="file"
                   name="image"
-                  onChange={(event) => {
-                    setFieldValue("image", event.currentTarget.files[0]);
+                  onChange={(e) => {
+                    let reader = new FileReader();
+                    let file = e.target.files[0];
+                    if (file) {
+                      reader.onloadend = () => setFileName(file.name);
+                      if (file.name !== fileName) {
+                        reader.readAsDataURL(file);
+                        setSrc(reader);
+                        setFieldValue("file", file);
+                      }
+                    }
                   }}
                 />
                 <ErrorMessage name="image" component={ErrorText} />
               </div>
 
               <div>
-                <Label htmlFor="checkIn">Price</Label>
+                <Label htmlFor="price">Price</Label>
                 <Input type="number" name="price" />
-                <ErrorMessage name="checkIn" component={ErrorText} />
+                <ErrorMessage name="price" component={ErrorText} />
               </div>
               <ButtonContent>
                 <SubmitButton type="submit">Submit</SubmitButton>
-                <CloseButton type="button">Cansel</CloseButton>
+                <CloseButton type="button">Cancel</CloseButton>
               </ButtonContent>
             </Form>
           )}
