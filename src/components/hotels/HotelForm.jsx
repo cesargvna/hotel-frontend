@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
+import { API_SERVICE } from "../../services/api.service";
+import { Description } from "@mui/icons-material";
 
 const Container = styled.div`
   display: flex;
@@ -108,6 +110,7 @@ const validationSchema = Yup.object().shape({
   address: Yup.string().required("Address is required"),
   classification: Yup.string().required("Classification is required"),
   price: Yup.number().required("Price is required"),
+  description: Yup.string().required("Description is required")
   //checkIn: Yup.string().required("Check-in time is required"),
   // checkOut: Yup.string().required("Check-out time is required"),
 });
@@ -115,8 +118,9 @@ const HotelForm = () => {
   const [fileName, setFileName] = useState("");
   const [src, setSrc] = useState("");
 
-  const handleSubmit = (values) => {
-    console.log("Formulario enviado con los valores:", values);
+  const handleSubmit = async (values) => {
+    const response = await API_SERVICE.post("/hotels", values);
+    console.log(response);
   };
 
   return (
@@ -129,6 +133,7 @@ const HotelForm = () => {
             address: "",
             classification: "",
             price: "",
+            description: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => handleSubmit(values)} // Cambié "lol" por una función que maneja el envío
@@ -178,6 +183,11 @@ const HotelForm = () => {
                 <Label htmlFor="price">Price</Label>
                 <Input type="number" name="price" />
                 <ErrorMessage name="price" component={ErrorText} />
+              </div>
+              <div>
+                <Label htmlFor="description">Descriotion</Label>
+                <Input type="text" name="description" />
+                <ErrorMessage name="description" component={ErrorText} />
               </div>
               <ButtonContent>
                 <SubmitButton type="submit">Submit</SubmitButton>
