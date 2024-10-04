@@ -3,7 +3,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { API_SERVICE } from "../../services/api.service";
-import { Description } from "@mui/icons-material";
 
 const Container = styled.div`
   display: flex;
@@ -108,9 +107,9 @@ const CloseButton = styled.button`
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   address: Yup.string().required("Address is required"),
-  classification: Yup.string().required("Classification is required"),
+  clasification: Yup.string().required("Classification is required"),
   price: Yup.number().required("Price is required"),
-  description: Yup.string().required("Description is required")
+  description: Yup.string().required("Description is required"),
   //checkIn: Yup.string().required("Check-in time is required"),
   // checkOut: Yup.string().required("Check-out time is required"),
 });
@@ -119,6 +118,7 @@ const HotelForm = () => {
   const [src, setSrc] = useState("");
 
   const handleSubmit = async (values) => {
+    console.log("hell0");
     const response = await API_SERVICE.post("/hotels", values);
     console.log(response);
   };
@@ -131,12 +131,12 @@ const HotelForm = () => {
           initialValues={{
             name: "",
             address: "",
-            classification: "",
+            clasification: "",
             price: "",
             description: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={(values) => handleSubmit(values)} // Cambié "lol" por una función que maneja el envío
+          onSubmit={(values) => handleSubmit(values)}
         >
           {({ setFieldValue }) => (
             <Form>
@@ -153,9 +153,9 @@ const HotelForm = () => {
               </div>
 
               <div>
-                <Label htmlFor="classification">Classification</Label>
-                <Input type="text" name="classification" />
-                <ErrorMessage name="classification" component={ErrorText} />
+                <Label htmlFor="clasification">Clasification</Label>
+                <Input type="text" name="clasification" />
+                <ErrorMessage name="clasification" component={ErrorText} />
               </div>
 
               <div>

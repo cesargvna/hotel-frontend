@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import HotelCard from "./HotelCart.jsx";
 import HotelFilter from "./HotelFilter.jsx";
 import HotelForm from "./HotelForm.jsx";
+import { API_SERVICE } from "../../services/api.service.js";
 
-const hotels = [
+const hotelsB = [
   {
     name: "Cartagena",
     address: "Cartagena",
@@ -66,6 +67,15 @@ const HotelsContainer = styled.div`
 
 const Hotel = () => {
   const [showForm, setShowForm] = useState(false);
+  const [hotels, setHotels] = useState([]);
+  const getHotels = async () => {
+    const response = await API_SERVICE.get("/hotels");
+    setHotels(response.data);
+    console.log(response.data);
+  };
+  useEffect(() => {
+    getHotels();
+  }, []);
   return (
     <HotelsContainer>
       <HotelFilter setShowForm={setShowForm} />
