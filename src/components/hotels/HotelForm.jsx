@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { API_SERVICE } from "../../services/api.service";
+import { useNavigate } from "react-router-dom"
 
 const Container = styled.div`
   display: flex;
@@ -116,12 +117,15 @@ const validationSchema = Yup.object().shape({
 const HotelForm = () => {
   const [fileName, setFileName] = useState("");
   const [src, setSrc] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (values) => {
-    console.log("hell0");
     const response = await API_SERVICE.post("/hotels", values);
-    console.log(response);
+    navigate("/protected/hotels");
   };
+  const handleCancel = () => {
+    navigate("/protected/hotels");
+  }
 
   return (
     <Container>
@@ -191,7 +195,7 @@ const HotelForm = () => {
               </div>
               <ButtonContent>
                 <SubmitButton type="submit">Submit</SubmitButton>
-                <CloseButton type="button">Cancel</CloseButton>
+                <CloseButton type="button" onClick={handleCancel}>Cancel</CloseButton>
               </ButtonContent>
             </Form>
           )}

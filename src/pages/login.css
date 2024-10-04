@@ -123,6 +123,21 @@
   padding: 5px;
 }
 
+.register-login {
+  text-align:center;
+}
+.register-login button {
+  margin-top: 20px;
+  border:none;
+  color: blue;
+  font-size: 14px;
+  cursor:pointer;
+}
+.register-login button:hover {
+  color: #007cc2;
+}
+
+
 @media (max-width: 768px) {
   .login-left {
     display: none;

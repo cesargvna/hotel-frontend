@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../services/api.service.js";
+import { login, register } from "../services/api.service.js";
 import { saveInLocalStorage } from "../utilities/local-storage-manager.js";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -9,6 +9,7 @@ import "./login.css";
 const Login = () => {
   const navigate = useNavigate();
 
+  const [isRegister, setIsRegister] = useState(false);
   const [errorAcount, setErrorAcount] = useState("");
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email address").required("*Required"),
@@ -31,12 +32,23 @@ const Login = () => {
     }
     setSubmitting(false);
   };
+  const handleRegister = async (values) => {
+    console.log("register ", values);
+
+    try {
+      const userRegister = await register(values.email, values.password);
+      console.log("user register", userRegister)
+      navigate("/login")
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
       validationSchema={validationSchema}
-      onSubmit={handleSubmit}
+      onSubmit={isRegister ? handleRegister : handleSubmit}
     >
       <div className="login-container">
         <div className="login-left"></div>
@@ -62,7 +74,7 @@ const Login = () => {
               </div>
 
               <button className="btn-login" type="submit">
-                Submit
+                {isRegister ? "Register" : "Login"}
               </button>
             </Form>
           </div>
@@ -113,8 +125,12 @@ const Login = () => {
               </svg>
               Apple
             </a>
+
           </div>
+          <p className="register-login">{isRegister ? "Do you have account ?" : "Don't have an account ?"} <button type="button" onClick={() => setIsRegister(!isRegister)}>{isRegister ? "Login" : "Register"}</button></p>
+
         </div>
+
       </div>
     </Formik>
   );

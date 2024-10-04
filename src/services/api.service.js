@@ -1,12 +1,16 @@
 import axios from "axios";
 import FormData from "form-data";
 import { getFromLocalStorage } from "../utilities/local-storage-manager";
+import { Password } from "@mui/icons-material";
 
 const API_URL = "http://localhost:3000/api";
 
 const login = async (email, password) => {
   return await axios.post(`${API_URL}/login`, { email, password });
 };
+const register = async (email, password) => {
+  return await axios.post(`${API_URL}/register`, { email, password });
+}
 
 const API_SERVICE = {
   get: async (url) => {
@@ -42,4 +46,4 @@ const API_SERVICE = {
   },
 };
 
-export { login, API_SERVICE };
+export { login, register, API_SERVICE };

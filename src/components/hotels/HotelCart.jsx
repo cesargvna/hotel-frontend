@@ -1,8 +1,7 @@
-// HotelCard.js
 import React from "react";
 import styled from "styled-components";
-
-// Contenedor general de la tarjeta
+//const IMAGE_URL = 'http://localhost:3000'
+const IMAGE_URL = import.meta.env.VITE_UPLOAD_URL;
 const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -21,7 +20,6 @@ const CardContainer = styled.div`
   }
 `;
 
-// Estilo para la imagen
 const HotelImage = styled.img`
   width: 200px;
   height: 150px;
@@ -86,7 +84,7 @@ const ActionButton = styled.button`
 const HotelCard = ({ hotel }) => {
   return (
     <CardContainer>
-      <HotelImage src={hotel.image} alt={hotel.name} />
+      <HotelImage src={`${IMAGE_URL + hotel.image}`} alt={hotel.name} />
       <InfoContainer>
         <HotelName>{hotel.name}</HotelName>
         <HotelAddress>{hotel.address}</HotelAddress>
