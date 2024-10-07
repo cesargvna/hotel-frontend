@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { replace, useNavigate, useParams } from "react-router-dom";
 import RoomsTable from "./RoomsTable";
 import styles from "styled-components";
 import { API_SERVICE } from "../../services/api.service";
@@ -49,26 +49,38 @@ const SelectedRooms = styles.div`
 
 const Reservation = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [hotel, setHotel] = useState([]);
   const [reserves, setReserves] = useState([]);
-  const { searchData, setSearchData } = useContext(SearchContext);
-  const [isReserve, setIsReserve] = useState(false);
+  const { searchData, setReserveInfo, reserveInfo } = useContext(SearchContext);
 
   const getHotel = async () => {
     try {
       const response = await API_SERVICE.get(`/hotels/${id}`);
       setHotel(response.data);
+      setReserveInfo(prevState => ({
+        ...prevState,
+        hotel: response.data
+      }))
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleReserve = async () => {};
+  const handleReserve = () => {
+    setReserveInfo(prevState => ({
+      ...prevState,
+      rooms: reserves
+    }))
+    if (reserves.length === 0) {
+      return console.log('no rooms selected')
+    }
+    navigate(`/create-reserve`, { replace: true })
+  };
 
   useEffect(() => {
     getHotel();
-  }, []);
-  console.log(searchData);
+  }, [reserves]);
   return (
     <ReservationContainer>
       <HotelContent>
@@ -102,7 +114,7 @@ const Reservation = () => {
       </SelectedRooms>
       <Title>Select a rom</Title>
       <RoomsTable reserves={reserves} setReserves={setReserves} />
-      {}
+      { }
     </ReservationContainer>
   );
 };

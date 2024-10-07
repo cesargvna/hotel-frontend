@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import HotelCard from "./HotelCart.jsx";
 import HotelFilter from "./HotelFilter.jsx";
 import HotelForm from "./HotelForm.jsx";
+import HotelTable from "./HotelTable.jsx"
 import { API_SERVICE } from "../../services/api.service.js";
 
 const HotelsContainer = styled.div`
@@ -35,22 +35,33 @@ const HotelsContainer = styled.div`
   }
 `;
 
+const Title = styled.h2`text-align:center`;
+
 const Hotel = () => {
   const [showForm, setShowForm] = useState(false);
   const [hotels, setHotels] = useState([]);
+
   const getHotels = async () => {
     const response = await API_SERVICE.get("/hotels");
     setHotels(response.data);
   };
+
+  const deleteHotel = (id) => {
+    try {
+      const response = API_SERVICE.delete(`/hotels/${id}`)
+      setHotels(hotels.filter(item => item.id !== id));
+    } catch (err) {
+      console.log(err)
+    }
+  }
   useEffect(() => {
     getHotels();
   }, []);
   return (
     <HotelsContainer>
+      <Title>Hotels</Title>
       <HotelFilter setShowForm={setShowForm} />
-      {hotels.map((hotel, index) => (
-        <HotelCard key={index} hotel={hotel} />
-      ))}
+      <HotelTable data={hotels} deleteHotel={deleteHotel} />
       {showForm && <HotelForm showForm={showForm} setShowForm={setShowForm} />}
     </HotelsContainer>
   );

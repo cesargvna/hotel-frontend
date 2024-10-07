@@ -48,6 +48,7 @@ export default function Header() {
   const user = getFromLocalStorage("user");
   const [open, setOpen] = useState(false);
 
+  const role = getFromLocalStorage("user").role;
   const handleOpen = () => {
     setOpen(!open);
   };
@@ -62,9 +63,13 @@ export default function Header() {
       <header className="container-header">
         <div className="header-content">
           <div className="logo">
-            <Link to="/">
-              <img src="../../../public/hotel-svg.svg" alt="logo" />
-            </Link>
+            {role === "admin" ?
+              (
+                <img src="../../../public/hotel-svg.svg" alt="logo" />)
+              : (
+                <Link to="/">
+                  <img src="../../../public/hotel-svg.svg" alt="logo" />
+                </Link>)}
           </div>
           <div className="nav-buttons ">
             {user ? (

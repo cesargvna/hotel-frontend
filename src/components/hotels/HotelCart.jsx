@@ -79,7 +79,7 @@ const ActionButton = styled.button`
 const HotelCard = ({ hotel }) => {
   const navigate = useNavigate();
   const handleViewMore = () => {
-    navigate(`/protected/select-room/${hotel.id}`, { replace: true });
+    navigate(`/select-room/${hotel.id}`, { replace: true });
   };
   return (
     <CardContainer>

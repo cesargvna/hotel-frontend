@@ -88,7 +88,7 @@ const Sidebar = ({ children }) => {
       icon: <HotelIcon style={{ fontSize: "35px" }} />,
     },
     {
-      path: "/usuarios",
+      path: "/users",
       name: "Usuarios",
       icon: <RoomPreferencesIcon style={{ fontSize: "35px" }} />,
     },

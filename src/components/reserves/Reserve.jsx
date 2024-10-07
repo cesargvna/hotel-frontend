@@ -6,6 +6,7 @@ import styled from "styled-components";
 const ReserveContainer = styled.div`
   padding: 10px;
 `;
+const Title = styled.h2`text-align: center`;
 const Reserve = () => {
   const [reserves, setReserves] = useState([]);
 
@@ -18,6 +19,7 @@ const Reserve = () => {
   }, []);
   return (
     <ReserveContainer>
+      <Title>Reservers</Title>
       <ReserveTable data={reserves} />
     </ReserveContainer>
   );

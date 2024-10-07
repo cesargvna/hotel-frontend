@@ -9,9 +9,11 @@ import HotelForm from "./components/hotels/HotelForm";
 import Rooms from "./components/rooms/Rooms.jsx";
 import RoomsForm from "./components/rooms/RoomsForm.jsx";
 import Reserve from "./components/reserves/Reserve.jsx";
-import ReserveForm from "./components/reservations/ReserveForm.jsx";
+import ReservationForm from "./components/reservations/ReservationForm.jsx";
 import Reservation from "./components/reservations/Reservation.jsx";
 import { SearchProvider } from "./context/SearchProvider.jsx";
+import User from "./components/users/User.jsx";
+import UserForm from "./components/users/UserForm.jsx";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route element={<Header />}>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/select-room/:id" element={<Reservation />} />
+          <Route path="create-reserve" element={<ReservationForm />} />
           <Route
             path="/protected/*"
             element={
@@ -31,13 +35,14 @@ function App() {
                     <Route path="hotel-rooms/:id" element={<Rooms />} />
                     <Route path="create-room/:id" element={<RoomsForm />} />
                     <Route path="reserves" element={<Reserve />} />
-                    <Route
-                      path="create-reserve/:id"
-                      element={<ReserveForm />}
-                    />
-                    <Route path="select-room/:id" element={<Reservation />} />
+                    <Route path="users" element={<User />} />
+                    <Route path="create-user" element={<UserForm />} />
+
+
                   </Routes>
                 </Sidebar>
+
+
               </RequireAuth>
             }
           />

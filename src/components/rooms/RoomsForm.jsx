@@ -51,7 +51,6 @@ const RoomsForm = () => {
   const { id } = useParams();
   const handleSubmit = async (values) => {
     values.hotelId = id;
-    console.log(values);
     const response = await API_SERVICE.post("/room", values);
     if (response.status === 201) {
       navigate(`/protected/hotel-rooms/${id}`, { replace: true });
