@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-//const IMAGE_URL = 'http://localhost:3000'
 const IMAGE_URL = import.meta.env.VITE_UPLOAD_URL;
+import { useNavigate } from "react-router-dom";
+
 const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -27,7 +28,6 @@ const HotelImage = styled.img`
   object-fit: cover;
 `;
 
-// Contenedor para la información textual
 const InfoContainer = styled.div`
   flex-grow: 1;
   margin-left: 20px;
@@ -35,13 +35,11 @@ const InfoContainer = styled.div`
   flex-direction: column;
 `;
 
-// Estilo para el título (nombre del hotel)
 const HotelName = styled.h2`
   font-size: 1.5em;
   margin: 0;
 `;
 
-// Estilo para la dirección y calificación
 const HotelAddress = styled.p`
   margin: 5px 0;
   color: gray;
@@ -52,19 +50,16 @@ const HotelRating = styled.p`
   color: #007bff;
 `;
 
-// Contenedor para la información del precio y botón
 const PriceContainer = styled.div`
   text-align: right;
   min-width: 150px;
 `;
 
-// Precio
 const Price = styled.p`
   font-size: 1.5em;
   font-weight: bold;
 `;
 
-// Botón de acción
 const ActionButton = styled.button`
   background-color: #00c4cc;
   color: white;
@@ -82,6 +77,10 @@ const ActionButton = styled.button`
 `;
 
 const HotelCard = ({ hotel }) => {
+  const navigate = useNavigate();
+  const handleViewMore = () => {
+    navigate(`/protected/select-room/${hotel.id}`, { replace: true });
+  };
   return (
     <CardContainer>
       <HotelImage src={`${IMAGE_URL + hotel.image}`} alt={hotel.name} />
@@ -93,7 +92,7 @@ const HotelCard = ({ hotel }) => {
       <PriceContainer>
         <Price>{hotel.price} per night</Price>
         <p>Price expected for April 2024</p>
-        <ActionButton>View More</ActionButton>
+        <ActionButton onClick={handleViewMore}>View More</ActionButton>
       </PriceContainer>
     </CardContainer>
   );

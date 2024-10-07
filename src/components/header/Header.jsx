@@ -34,6 +34,8 @@ const TransparentButton = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  font-size: 16px;
+  padding: 0;
 `;
 
 const AvatarWrapper = styled.div`
@@ -50,12 +52,19 @@ export default function Header() {
     setOpen(!open);
   };
 
+  const logOut = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
+
   return (
     <>
       <header className="container-header">
         <div className="header-content">
           <div className="logo">
-            <img src="" alt="logo" />
+            <Link to="/">
+              <img src="../../../public/hotel-svg.svg" alt="logo" />
+            </Link>
           </div>
           <div className="nav-buttons ">
             {user ? (
@@ -77,11 +86,15 @@ export default function Header() {
                       Setting
                     </Link>
                   </MenuItem>
+                  <MenuItem>
+                    <TransparentButton onClick={logOut}>
+                      LogOut
+                    </TransparentButton>
+                  </MenuItem>
                 </DropdownMenu>
               </AvatarWrapper>
             ) : (
               <>
-                <button className="btn favorites">Favorites</button>
                 <Link to="/login">
                   <button className="btn login">Login</button>
                 </Link>

@@ -4,7 +4,6 @@ import { getFromLocalStorage } from "../utilities/local-storage-manager";
 export const AxiosInterseptor = () => {
   const updateHeaders = (request) => {
     let user = getFromLocalStorage("user");
-    console.log(user);
     const newHeader = {
       Authorization: `Bearer ${user.token}`,
       "Content-Type": "application/json",

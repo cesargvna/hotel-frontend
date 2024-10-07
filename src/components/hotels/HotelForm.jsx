@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { API_SERVICE } from "../../services/api.service";
-import { useNavigate } from "react-router-dom"
+import { API_SERVICE, POST_IMAGE } from "../../services/api.service";
+import { useNavigate } from "react-router-dom";
+import { SubmitButton, CloseButton } from "../utils/Buttons";
 
 const Container = styled.div`
   display: flex;
@@ -76,35 +77,6 @@ const ButtonContent = styled.div`
   align-items: center;
 `;
 
-const SubmitButton = styled.button`
-  width: 40%;
-  padding: 0.75rem;
-  background-color: #00c4cc;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  &:hover {
-    background-color: #009fa8;
-  }
-`;
-
-const CloseButton = styled.button`
-  width: 40%;
-  padding: 0.75rem;
-  background-color: #dc3545;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  &:hover {
-    background-color: #c82333;
-  }
-`;
-
-// Form validation schema with Yup
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   address: Yup.string().required("Address is required"),
@@ -120,12 +92,12 @@ const HotelForm = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (values) => {
-    const response = await API_SERVICE.post("/hotels", values);
+    const response = await POST_IMAGE("/hotels", values);
     navigate("/protected/hotels");
   };
   const handleCancel = () => {
     navigate("/protected/hotels");
-  }
+  };
 
   return (
     <Container>
@@ -195,7 +167,9 @@ const HotelForm = () => {
               </div>
               <ButtonContent>
                 <SubmitButton type="submit">Submit</SubmitButton>
-                <CloseButton type="button" onClick={handleCancel}>Cancel</CloseButton>
+                <CloseButton type="button" onClick={handleCancel}>
+                  Cancel
+                </CloseButton>
               </ButtonContent>
             </Form>
           )}

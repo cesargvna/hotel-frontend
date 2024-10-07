@@ -18,3 +18,34 @@
   text-decoration: none;
   color: #000;
 }
+.btn {
+  background-color: #1868b8;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.login {
+  background-color: #fff;
+  color: #1868b8;
+  border: 1px solid #1868b8;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.logo {
+  width: 24px;
+  height: 24pxpx;
+}
+.logo img {
+  width: 100%;
+  height: 100%;
+}

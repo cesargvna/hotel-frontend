@@ -37,12 +37,12 @@ const Login = () => {
 
     try {
       const userRegister = await register(values.email, values.password);
-      console.log("user register", userRegister)
-      navigate("/login")
+      console.log("user register", userRegister);
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <Formik
@@ -125,12 +125,14 @@ const Login = () => {
               </svg>
               Apple
             </a>
-
           </div>
-          <p className="register-login">{isRegister ? "Do you have account ?" : "Don't have an account ?"} <button type="button" onClick={() => setIsRegister(!isRegister)}>{isRegister ? "Login" : "Register"}</button></p>
-
+          <p className="register-login">
+            {isRegister ? "Do you have account ?" : "Don't have an account ?"}{" "}
+            <button type="button" onClick={() => setIsRegister(!isRegister)}>
+              {isRegister ? "Login" : "Register"}
+            </button>
+          </p>
         </div>
-
       </div>
     </Formik>
   );

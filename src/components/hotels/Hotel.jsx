@@ -5,36 +5,6 @@ import HotelFilter from "./HotelFilter.jsx";
 import HotelForm from "./HotelForm.jsx";
 import { API_SERVICE } from "../../services/api.service.js";
 
-const hotelsB = [
-  {
-    name: "Cartagena",
-    address: "Cartagena",
-    rating: 90,
-    price: "650.000",
-    image: "https://via.placeholder.com/200", // URL de la imagen del hotel
-  },
-  {
-    name: "Barranquilla",
-    address: "Barranquilla",
-    rating: 90,
-    price: "650.000",
-    image: "https://via.placeholder.com/200", // URL de la imagen del hotel
-  },
-  {
-    name: "Cartagena",
-    address: "Cartagena",
-    rating: 90,
-    price: "650.000",
-    image: "https://via.placeholder.com/200", // URL de la imagen del hotel
-  },
-  {
-    name: "Barranquilla",
-    address: "Barranquilla",
-    rating: 90,
-    price: "650.000",
-    image: "https://via.placeholder.com/200", // URL de la imagen del hotel
-  },
-];
 const HotelsContainer = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -71,7 +41,6 @@ const Hotel = () => {
   const getHotels = async () => {
     const response = await API_SERVICE.get("/hotels");
     setHotels(response.data);
-    console.log(response.data);
   };
   useEffect(() => {
     getHotels();

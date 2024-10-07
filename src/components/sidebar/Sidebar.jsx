@@ -93,8 +93,8 @@ const Sidebar = ({ children }) => {
       icon: <RoomPreferencesIcon style={{ fontSize: "35px" }} />,
     },
     {
-      path: "/customers",
-      name: "Clientes",
+      path: "/reserves",
+      name: "Reserves",
       icon: <SupportAgentIcon style={{ fontSize: "35px" }} />,
     },
   ];
