@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { getFromLocalStorage } from "../../utilities/local-storage-manager.js";
 import Avatar from "../Avatar.jsx";
 import "./header.css";
@@ -47,6 +47,7 @@ const AvatarWrapper = styled.div`
 export default function Header() {
   const user = getFromLocalStorage("user");
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const role = getFromLocalStorage("user").role;
   const handleOpen = () => {
@@ -55,7 +56,7 @@ export default function Header() {
 
   const logOut = () => {
     localStorage.removeItem("user");
-    window.location.reload();
+    navigate("/");
   };
 
   return (
@@ -63,13 +64,13 @@ export default function Header() {
       <header className="container-header">
         <div className="header-content">
           <div className="logo">
-            {role === "admin" ?
-              (
-                <img src="../../../public/hotel-svg.svg" alt="logo" />)
-              : (
-                <Link to="/">
-                  <img src="../../../public/hotel-svg.svg" alt="logo" />
-                </Link>)}
+            {role === "admin" ? (
+              <img src="../../../public/hotel-svg.svg" alt="logo" />
+            ) : (
+              <Link to="/">
+                <img src="../../../public/hotel-svg.svg" alt="logo" />
+              </Link>
+            )}
           </div>
           <div className="nav-buttons ">
             {user ? (

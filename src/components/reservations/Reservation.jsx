@@ -7,6 +7,8 @@ import { API_SERVICE } from "../../services/api.service";
 const IMAGE_URL = "";
 import { SearchContext } from "../../context/SearchProvider.jsx";
 import { SubmitButton } from "../utils/Buttons";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ReservationContainer = styles.div`
   padding: 10px;
@@ -74,7 +76,9 @@ const Reservation = () => {
       rooms: reserves,
     }));
     if (reserves.length === 0) {
-      return console.log("no rooms selected");
+      return toast.error("Selecciona almenos una habitacion.", {
+        autoClose: 2000,
+      });
     }
     navigate(`/create-reserve`, { replace: true });
   };
@@ -84,6 +88,7 @@ const Reservation = () => {
   }, [reserves]);
   return (
     <ReservationContainer>
+      <ToastContainer />
       <HotelContent>
         <ImageContent src={`${IMAGE_URL + hotel.image}`} alt={hotel.name} />
         <HotelInfo>

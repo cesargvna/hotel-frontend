@@ -2,20 +2,23 @@ import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { SearchContext } from "../../context/SearchProvider.jsx"
+import { SearchContext } from "../../context/SearchProvider.jsx";
 import { API_SERVICE } from "../../services/api.service.js";
 import { getFromLocalStorage } from "../../utilities/local-storage-manager.js";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const FormInfoContainer = styled.div`
-  padding:20px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:20px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 `;
 
 const FormContainer = styled.div`
   width: 50%;
-  max-width:400px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f4f4f9;
@@ -67,17 +70,16 @@ const SubmitButton = styled.button`
   }
 `;
 
-
 const InfoContainer = styled.div`
   width: 50%;
   max-width: 400px;
-  padding:20px;
+  padding: 20px;
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 `;
 
 const Title = styled.h2`
@@ -119,19 +121,17 @@ const Total = styled.h4`
 `;
 const Room = styled.div`
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
 `;
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  phone: Yup.string()
-    .required("Phone is required"),
+  phone: Yup.string().required("Phone is required"),
   address: Yup.string().required("Address is required"),
 });
 
-
-
 const ReservationForm = () => {
   const { searchData, reserveInfo } = useContext(SearchContext);
+  const navigate = useNavigate();
   let totalPrice = 0;
   for (let i = 0; i < reserveInfo.rooms.length; i++) {
     totalPrice += reserveInfo.rooms[i].price;
@@ -139,25 +139,36 @@ const ReservationForm = () => {
   const handleSubmit = async (values) => {
     const user = {
       ...values,
-      id: getFromLocalStorage('user').id
-    }
+      id: getFromLocalStorage("user").id,
+    };
     const data = {
       user: user,
       hotelId: reserveInfo.hotel.id,
       rooms: reserveInfo.rooms,
-      date: searchData
-    }
+      date: searchData,
+    };
     try {
-      console.log(data)
-      const response = await API_SERVICE.post('/reserve', data)
-      console.log(response)
+      console.log(data);
+      const response = await API_SERVICE.post("/reserve", data);
+      if (response.status === 201) {
+        toast.success("Reserva realizada exitosamente!", {
+          autoClose: 3000,
+        });
+      }
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     } catch (err) {
-      console.log(err);
+      toast.error("Error al agregar reserva.", { autoClose: 3000 });
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
     }
-  }
+  };
 
   return (
     <FormInfoContainer>
+      <ToastContainer />
       <InfoContainer>
         <Title>Info Reserva</Title>
         <Paragraph>Hotel: {reserveInfo.hotel.name}</Paragraph>
@@ -177,7 +188,8 @@ const ReservationForm = () => {
         </RoomContainer>
         <Divider />
         <Total>Total: {totalPrice}$</Total>
-      </InfoContainer>      <FormContainer>
+      </InfoContainer>{" "}
+      <FormContainer>
         <h1>Reserve Form</h1>
         <Formik
           initialValues={{ name: "", phone: "", address: "" }}
@@ -211,8 +223,7 @@ const ReservationForm = () => {
           )}
         </Formik>
       </FormContainer>
-
-    </FormInfoContainer >
+    </FormInfoContainer>
   );
 };
 
