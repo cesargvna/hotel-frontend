@@ -19,7 +19,7 @@ const Login = () => {
     try {
       const userLogged = await login(values.email, values.password);
       saveInLocalStorage("user", userLogged.data);
-      navigate("/protected", { replace: true });
+      navigate("/protected/hotels", { replace: true });
       values.email = "";
       values.password = "";
     } catch (error) {

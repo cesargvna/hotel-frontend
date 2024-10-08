@@ -8,9 +8,9 @@ export const SearchProvider = ({ children }) => {
     fechaFin: "",
     search: "",
   });
-  console.log(searchData);
+  const [reserveInfo, setReserveInfo] = useState({ hotel: [], rooms: [] })
   return (
-    <SearchContext.Provider value={{ searchData, setSearchData }}>
+    <SearchContext.Provider value={{ searchData, setSearchData, reserveInfo, setReserveInfo }}>
       {children}
     </SearchContext.Provider>
   );

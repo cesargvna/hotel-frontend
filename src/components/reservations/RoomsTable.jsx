@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_SERVICE } from "../../services/api.service";
-import styled from "styled-components";
 
 import {
   Table,
@@ -31,7 +30,6 @@ const RoomsTable = ({ reserves, setReserves }) => {
   const handleCheckboxChange = (room, isChecked) => {
     if (isChecked) {
       setReserves((prevSelected) => [...prevSelected, room]);
-      console.log(reserves);
     } else {
       setReserves((prevSelected) =>
         prevSelected.filter(

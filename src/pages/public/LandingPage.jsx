@@ -62,7 +62,6 @@ export default function LandingPage() {
     const response = await API_SERVICE.get("/search", { params: searchData });
     setHotels(response.data);
   };
-  console.log(hotels);
   return (
     <>
       <LandingContainer>
