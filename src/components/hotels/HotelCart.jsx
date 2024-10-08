@@ -3,6 +3,7 @@ import styled from "styled-components";
 //const IMAGE_URL = import.meta.env.VITE_UPLOAD_URL;
 const IMAGE_URL = "";
 import { useNavigate } from "react-router-dom";
+import { getFromLocalStorage } from "../../utilities/local-storage-manager.js";
 
 const CardContainer = styled.div`
   display: flex;
@@ -79,7 +80,11 @@ const ActionButton = styled.button`
 
 const HotelCard = ({ hotel }) => {
   const navigate = useNavigate();
+  const user = getFromLocalStorage("user");
   const handleViewMore = () => {
+    if (!user) {
+      return navigate("/login", { replace: true });
+    }
     navigate(`/select-room/${hotel.id}`, { replace: true });
   };
   return (

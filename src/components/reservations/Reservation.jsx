@@ -3,7 +3,8 @@ import { replace, useNavigate, useParams } from "react-router-dom";
 import RoomsTable from "./RoomsTable";
 import styles from "styled-components";
 import { API_SERVICE } from "../../services/api.service";
-const IMAGE_URL = import.meta.env.VITE_UPLOAD_URL;
+//const IMAGE_URL = import.meta.env.VITE_UPLOAD_URL;
+const IMAGE_URL = "";
 import { SearchContext } from "../../context/SearchProvider.jsx";
 import { SubmitButton } from "../utils/Buttons";
 
@@ -58,24 +59,24 @@ const Reservation = () => {
     try {
       const response = await API_SERVICE.get(`/hotels/${id}`);
       setHotel(response.data);
-      setReserveInfo(prevState => ({
+      setReserveInfo((prevState) => ({
         ...prevState,
-        hotel: response.data
-      }))
+        hotel: response.data,
+      }));
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleReserve = () => {
-    setReserveInfo(prevState => ({
+    setReserveInfo((prevState) => ({
       ...prevState,
-      rooms: reserves
-    }))
+      rooms: reserves,
+    }));
     if (reserves.length === 0) {
-      return console.log('no rooms selected')
+      return console.log("no rooms selected");
     }
-    navigate(`/create-reserve`, { replace: true })
+    navigate(`/create-reserve`, { replace: true });
   };
 
   useEffect(() => {
@@ -114,7 +115,7 @@ const Reservation = () => {
       </SelectedRooms>
       <Title>Select a rom</Title>
       <RoomsTable reserves={reserves} setReserves={setReserves} />
-      { }
+      {}
     </ReservationContainer>
   );
 };

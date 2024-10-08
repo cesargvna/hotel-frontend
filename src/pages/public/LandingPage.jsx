@@ -55,21 +55,28 @@ export default function LandingPage() {
       features: ["Piscina", "Spa"],
     },
   ];
+
   const { searchData, setSearchData } = useContext(SearchContext);
   const [hotels, setHotels] = useState([]);
   const handleSearch = async (e) => {
     e.preventDefault();
-    const response = await API_SERVICE.get("/search", { params: searchData });
-    setHotels(response.data);
+    try {
+      const response = await API_SERVICE.get("/search", { params: searchData });
+      setHotels(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <>
       <LandingContainer>
         <SearchSection>
           <SearchHotel handleSearch={handleSearch} />
-          {hotels.map((hotel, index) => (
-            <CardHotel key={index} hotel={hotel} />
-          ))}
+          {hotels.length > 0
+            ? hotels.map((hotel, index) => (
+                <CardHotel key={index} hotel={hotel} />
+              ))
+            : ""}
         </SearchSection>
         <SectionValoration>
           {hotelData.map((hotel, index) => (
