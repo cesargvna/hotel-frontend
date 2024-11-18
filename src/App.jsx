@@ -31,18 +31,14 @@ function App() {
                 <Sidebar>
                   <Routes>
                     <Route path="hotels" element={<Hotel />} />
-                    <Route path="create-hotel" element={<HotelForm />} />
+                    <Route path="create-hotel/:id" element={<HotelForm />} />
                     <Route path="hotel-rooms/:id" element={<Rooms />} />
                     <Route path="create-room/:id" element={<RoomsForm />} />
                     <Route path="reserves" element={<Reserve />} />
                     <Route path="users" element={<User />} />
                     <Route path="create-user" element={<UserForm />} />
-
-
                   </Routes>
                 </Sidebar>
-
-
               </RequireAuth>
             }
           />

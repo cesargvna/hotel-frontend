@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-//const IMAGE_URL = import.meta.env.VITE_UPLOAD_URL;
-const IMAGE_URL = "";
+const IMAGE_URL = import.meta.env.VITE_UPLOAD_URL;
+// const IMAGE_URL = "";
 import { useNavigate } from "react-router-dom";
 import { getFromLocalStorage } from "../../utilities/local-storage-manager.js";
 

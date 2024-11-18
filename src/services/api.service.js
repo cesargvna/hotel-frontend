@@ -2,8 +2,8 @@ import axios from "axios";
 import FormData from "form-data";
 import { getFromLocalStorage } from "../utilities/local-storage-manager";
 
-// const baseUrl = "http://localhost:3000/api";
-const baseUrl = "/api";
+const baseUrl = "http://localhost:3000/api";
+// const baseUrl = "/api";
 
 const login = async (email, password) => {
   return await axios.post(`${baseUrl}/login`, { email, password });
